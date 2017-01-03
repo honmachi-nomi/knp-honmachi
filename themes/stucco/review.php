@@ -38,9 +38,14 @@ $this->inc('inc/header.php');
                                 ?>
                             <div class="user_name">
                                 <?php
-                                $user = User::getByUserID($c->getCollectionUserID());
-                                $username = $user->getUserName();
-                                echo $username;
+                                $c = Page::getCurrentPage();
+                                $vo = $c->getVersionObject();
+                                if (is_object($vo)) {
+                                    $uID = $vo->getVersionAuthorUserID();
+                                    $ui = UserInfo::getByID($uID);
+                                    $displayName = $ui->getAttribute('displayName');
+                                    echo '投稿者：' .  $displayName;
+                                }
                                 ?>
                             </div>
 
@@ -59,6 +64,13 @@ $this->inc('inc/header.php');
                                 <?php
                                 $a = new Area('Category');
                                 $a->display($c);
+                                ?>
+
+                            </div>
+
+                            <div class="post-yser">
+                                <?php
+
                                 ?>
 
                             </div>
